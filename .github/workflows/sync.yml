@@ -1,0 +1,18 @@
+name: Sync from Azure DevOps
+
+on: [push]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Azure DevOps Repo
+        uses: actions/checkout@v4
+        with:
+          repository: azuredevopsncpl/dockerapp/_git/dockerapp
+          token: ${{ secrets.AZURE_DEVOPS_PAT }}
+
+      - name: Push to GitHub
+        run: |
+          git remote add github https://github.com/sushant-kataria/docker-app.git
+          git push github main
